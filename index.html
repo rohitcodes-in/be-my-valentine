@@ -1,0 +1,214 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Be My Valentine ❤️</title>
+
+<link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;600&display=swap" rel="stylesheet">
+
+<style>
+*{box-sizing:border-box}
+body{
+  margin:0;
+  font-family:'Poppins',sans-serif;
+  height:100vh;
+  display:flex;
+  justify-content:center;
+  align-items:center;
+  overflow:hidden;
+}
+
+/* 🌸 Background collage */
+body::before{
+  content:"";
+  position:absolute;
+  inset:0;
+  background:
+    url("assets/collage1.jpeg"),
+    url("assets/collage2.jpeg"),
+    url("assets/collage3.jpeg");
+  background-size:cover;
+  background-position:center;
+  filter:blur(10px) brightness(0.6);
+  z-index:-1;
+  animation:fadeBg 3s forwards;
+}
+@keyframes fadeBg{from{opacity:0}to{opacity:1}}
+
+.container{
+  background:rgba(255,255,255,0.92);
+  padding:24px;
+  width:92%;
+  max-width:420px;
+  border-radius:22px;
+  text-align:center;
+  box-shadow:0 20px 40px rgba(0,0,0,.3);
+  animation:pop .6s ease;
+}
+@keyframes pop{from{transform:scale(.8);opacity:0}to{transform:scale(1);opacity:1}}
+
+.home-gif{width:120px;margin-bottom:10px}
+
+h1{color:#ff4d6d;margin-bottom:8px}
+p{font-size:17px;color:#444}
+
+/* Buttons */
+.buttons{
+  margin-top:20px;
+  position:relative;
+  height:90px;
+}
+button{
+  border:none;
+  padding:12px 26px;
+  font-size:18px;
+  border-radius:30px;
+  cursor:pointer;
+  transition:.3s;
+}
+#yesBtn{background:#ff4d6d;color:#fff}
+#noBtn{
+  background:#ccc;
+  color:#333;
+  position:absolute;
+  right:0;
+}
+
+/* AFTER YES */
+#afterYes{
+  display:none;
+  margin-top:10px;
+}
+
+/* ❤️ LOVE BUTTON CENTER */
+#loveBtn{
+  background:#ff4d6d;
+  color:#fff;
+  display:block;
+  margin:0 auto 14px auto;
+  padding:14px 36px;
+  font-size:18px;
+  border-radius:40px;
+}
+
+.love-gif{width:170px}
+
+.lines{
+  color:#ff4d6d;
+  margin-top:12px;
+  font-size:16px;
+  line-height:1.6;
+}
+
+/* 💕 RAINING HEARTS */
+.heart{
+  position:fixed;
+  top:-20px;
+  font-size:22px;
+  animation:fall linear forwards;
+}
+@keyframes fall{
+  to{transform:translateY(110vh);opacity:0}
+}
+
+@media(max-width:480px){
+  h1{font-size:22px}
+  button{font-size:16px}
+}
+</style>
+</head>
+
+<body>
+
+<div class="container">
+
+<!-- HOME GIF -->
+<img src="assets/home.gif" class="home-gif" id="homeGif">
+
+<!-- INTRO -->
+<div id="intro">
+  <h1>Hey ❤️</h1>
+  <p id="question"></p>
+</div>
+
+<!-- YES / NO -->
+<div class="buttons">
+  <button id="yesBtn">YES 💖</button>
+  <button id="noBtn">NO 😜</button>
+</div>
+
+<!-- AFTER YES -->
+<div id="afterYes">
+
+  <button id="loveBtn">I LOVE YOU ❤️</button>
+
+  <img src="assets/pookie.gif" class="love-gif">
+
+  <p class="lines">
+    I didn’t choose you by chance… I chose you by heart 💕<br>
+    Your smile feels like my favorite place 🏡<br>
+    With you, everything feels right ✨<br>
+    Always you. Forever us 💘
+  </p>
+
+</div>
+
+</div>
+
+<audio id="music" src="assets/UntilIFoundYou.mp3"></audio>
+
+<script>
+const herName = "Pran Priye";
+document.getElementById("question").innerText =
+`Will you be my Valentine, ${herName}? 💝`;
+
+const noBtn = document.getElementById("noBtn");
+const yesBtn = document.getElementById("yesBtn");
+const afterYes = document.getElementById("afterYes");
+const music = document.getElementById("music");
+const loveBtn = document.getElementById("loveBtn");
+
+/* ❌ NO button questions */
+const questions = [
+  "Are you sure? 😏",
+  "Soch lo 🥺",
+  "Dil tod dogi 😢",
+  "Man jao na 💕",
+  "Last chance 😜"
+];
+
+function moveNo(){
+  const x = Math.random()*240 - 120;
+  const y = Math.random()*240 - 120;
+  noBtn.style.transform = `translate(${x}px,${y}px)`;
+  noBtn.innerText = questions[Math.floor(Math.random()*questions.length)];
+}
+noBtn.addEventListener("mouseenter",moveNo);
+noBtn.addEventListener("click",moveNo);
+
+/* ✅ YES CLICK */
+yesBtn.onclick = ()=>{
+  document.getElementById("intro").style.display="none";
+  document.querySelector(".buttons").style.display="none";
+  document.getElementById("homeGif").style.display="none";
+  afterYes.style.display="block";
+  music.play();
+};
+
+/* 💕 HEART RAIN */
+loveBtn.onclick = ()=>{
+  for(let i=0;i<40;i++){
+    const h=document.createElement("div");
+    h.className="heart";
+    h.innerText="💖";
+    h.style.left=Math.random()*100+"vw";
+    h.style.animationDuration=2+Math.random()*2+"s";
+    document.body.appendChild(h);
+    setTimeout(()=>h.remove(),4000);
+  }
+};
+</script>
+
+</body>
+</html>
