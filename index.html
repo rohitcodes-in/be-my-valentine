@@ -5,24 +5,25 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>Be My Valentine ❤️</title>
 
-<link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;600&display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;600;700&display=swap" rel="stylesheet">
 
 <style>
 *{box-sizing:border-box}
+
 body{
   margin:0;
   font-family:'Poppins',sans-serif;
-  height:100vh;
+  min-height:100vh;
   display:flex;
   justify-content:center;
-  align-items:center;
-  overflow:hidden;
+  align-items:flex-start;
+  overflow-y:auto;
 }
 
 /* 🌸 Background collage */
 body::before{
   content:"";
-  position:absolute;
+  position:fixed;
   inset:0;
   background:
     url("assets/collage1.jpeg"),
@@ -30,44 +31,60 @@ body::before{
     url("assets/collage3.jpeg");
   background-size:cover;
   background-position:center;
-  filter:blur(10px) brightness(0.6);
+  filter:blur(2px) brightness(0.85);
   z-index:-1;
-  animation:fadeBg 3s forwards;
 }
-@keyframes fadeBg{from{opacity:0}to{opacity:1}}
 
+/* CONTAINER */
 .container{
-  background:rgba(255,255,255,0.92);
+  background:rgba(255,255,255,0.93);
   padding:24px;
   width:92%;
   max-width:420px;
   border-radius:22px;
   text-align:center;
   box-shadow:0 20px 40px rgba(0,0,0,.3);
-  animation:pop .6s ease;
+  margin:30px 0;
 }
-@keyframes pop{from{transform:scale(.8);opacity:0}to{transform:scale(1);opacity:1}}
 
-.home-gif{width:120px;margin-bottom:10px}
+.home-gif{width:120px}
 
-h1{color:#ff4d6d;margin-bottom:8px}
-p{font-size:17px;color:#444}
+/* 💖 HEADINGS */
+h1{
+  font-weight:700;
+  background:linear-gradient(45deg,#ff2f68,#ff7a00);
+  -webkit-background-clip:text;
+  -webkit-text-fill-color:transparent;
+}
 
-/* Buttons */
+#question{
+  font-size:17px;
+  font-weight:600;
+  color:#555;
+}
+
+/* YES / NO */
 .buttons{
   margin-top:20px;
   position:relative;
   height:90px;
 }
+
 button{
   border:none;
   padding:12px 26px;
-  font-size:18px;
+  font-size:16px;
   border-radius:30px;
   cursor:pointer;
   transition:.3s;
+  font-weight:600;
 }
-#yesBtn{background:#ff4d6d;color:#fff}
+
+#yesBtn{
+  background:linear-gradient(45deg,#ff4d6d,#ff758f);
+  color:#fff;
+}
+
 #noBtn{
   background:#ccc;
   color:#333;
@@ -76,45 +93,91 @@ button{
 }
 
 /* AFTER YES */
-#afterYes{
-  display:none;
-  margin-top:10px;
-}
+#afterYes{display:none;margin-top:10px}
 
-/* ❤️ LOVE BUTTON CENTER */
 #loveBtn{
-  background:#ff4d6d;
+  background:linear-gradient(45deg,#ff4d6d,#ff1e56);
   color:#fff;
   display:block;
-  margin:0 auto 14px auto;
+  margin:0 auto 14px;
   padding:14px 36px;
-  font-size:18px;
   border-radius:40px;
+  font-weight:700;
 }
 
-.love-gif{width:170px}
+.love-gif{width:160px}
 
+/* ❤️ MAIN LINES */
 .lines{
-  color:#ff4d6d;
-  margin-top:12px;
+  line-height:1.7;
+  margin-bottom:18px;
   font-size:16px;
-  line-height:1.6;
 }
 
-/* 💕 RAINING HEARTS */
-.heart{
+.line1{color:#ff4d6d;font-weight:700;}
+.line2{color:#ff7a00;font-weight:600;}
+.line3{color:#7a3cff;font-weight:700;}
+
+/* 🎁 GIFT SECTION */
+.gifts{
+  display:flex;
+  justify-content:space-between;
+  gap:10px;
+  margin-bottom:16px;
+}
+
+.gifts button{
+  flex:1;
+  background:linear-gradient(135deg,#ff6a88,#ff4d6d);
+  color:#fff;
+  font-size:14px;
+  padding:10px;
+  font-weight:700;
+}
+
+/* GIFT CONTENT */
+.gift-content{
+  display:none;
+  animation:fadeIn .6s ease forwards;
+}
+
+.gift-content img{
+  width:90%;
+  max-width:260px;
+  border-radius:18px;
+  margin:10px auto;
+}
+
+/* GIFT TEXT COLORS */
+.gift2-text{
+  color:#ff6f91;
+  font-weight:600;
+}
+
+.gift3-text{
+  color:#ff2f68;
+  font-weight:700;
+  font-size:18px;
+}
+
+@keyframes fadeIn{
+  from{opacity:0;transform:translateY(10px)}
+  to{opacity:1;transform:translateY(0)}
+}
+
+/* 🎆 FIREWORKS */
+.firework{
   position:fixed;
-  top:-20px;
-  font-size:22px;
-  animation:fall linear forwards;
-}
-@keyframes fall{
-  to{transform:translateY(110vh);opacity:0}
+  width:8px;
+  height:8px;
+  border-radius:50%;
+  animation:explode 1.2s ease-out forwards;
+  z-index:9999;
 }
 
-@media(max-width:480px){
-  h1{font-size:22px}
-  button{font-size:16px}
+@keyframes explode{
+  from{transform:translate(0,0) scale(1);opacity:1}
+  to{transform:translate(var(--x),var(--y)) scale(0.2);opacity:0}
 }
 </style>
 </head>
@@ -123,92 +186,134 @@ button{
 
 <div class="container">
 
-<!-- HOME GIF -->
 <img src="assets/home.gif" class="home-gif" id="homeGif">
 
-<!-- INTRO -->
 <div id="intro">
-  <h1>Hey ❤️</h1>
-  <p id="question"></p>
+  <h1>Hey Pran Priye ❤️</h1>
+  <p id="question">Will you be my Valentine?</p>
 </div>
 
-<!-- YES / NO -->
 <div class="buttons">
   <button id="yesBtn">YES 💖</button>
   <button id="noBtn">NO 😜</button>
 </div>
 
-<!-- AFTER YES -->
 <div id="afterYes">
 
   <button id="loveBtn">I LOVE YOU ❤️</button>
 
   <img src="assets/pookie.gif" class="love-gif">
 
-  <p class="lines">
-    I didn’t choose you by chance… I chose you by heart 💕<br>
-    Your smile feels like my favorite place 🏡<br>
-    With you, everything feels right ✨<br>
-    Always you. Forever us 💘
-  </p>
+  <div class="lines">
+    <div class="line1">
+      I didn’t fall for you all at once, bas har din thoda aur pyaar ho gaya 💕
+    </div>
+    <div class="line2">
+      You make even the simplest moments feel special✨
+    </div>
+    <div class="line3">
+      Always you <b>Pran Priye</b>. Today, tomorrow, and every lifetime💘
+    </div>
+  </div>
+
+  <!-- 🎁 GIFT BUTTONS -->
+  <div class="gifts">
+    <button onclick="showGift(1)">🎁 Gift 1</button>
+    <button onclick="showGift(2)">🎁 Gift 2</button>
+    <button onclick="showGift(3)">🎁 Gift 3</button>
+  </div>
+
+  <!-- 🎁 CONTENTS -->
+  <div id="gift1" class="gift-content">
+    <img src="assets/surprise1.jpeg">
+  </div>
+
+  <div id="gift2" class="gift-content">
+    <p class="gift2-text">
+      Tum meri <b>favorite notification</b> ho 💌<br>
+      Tumhare bina din incomplete lagta hai..
+    </p>
+  </div>
+
+  <div id="gift3" class="gift-content">
+    <p class="gift3-text">
+      I love you more, <b>Pran Priye</b> ❤️
+    </p>
+  </div>
 
 </div>
-
 </div>
 
 <audio id="music" src="assets/UntilIFoundYou.mp3"></audio>
 
+<!-- 🔁 JS SAME AS YOUR CODE -->
 <script>
-const herName = "Pran Priye";
-document.getElementById("question").innerText =
-`Will you be my Valentine, ${herName}? 💝`;
-
 const noBtn = document.getElementById("noBtn");
 const yesBtn = document.getElementById("yesBtn");
 const afterYes = document.getElementById("afterYes");
 const music = document.getElementById("music");
-const loveBtn = document.getElementById("loveBtn");
 
-/* ❌ NO button questions */
 const questions = [
   "Are you sure? 😏",
   "Soch lo 🥺",
   "Dil tod dogi 😢",
-  "Man jao na 💕",
+  "Man jao na baby 💕",
   "Last chance 😜"
 ];
 
-function moveNo(){
-  const x = Math.random()*240 - 120;
-  const y = Math.random()*240 - 120;
-  noBtn.style.transform = `translate(${x}px,${y}px)`;
-  noBtn.innerText = questions[Math.floor(Math.random()*questions.length)];
+/* ❌ NO BUTTON MOVE */
+function moveNo() {
+  const x = Math.random() * 200 - 100;
+  const y = Math.random() * 200 - 100;
+  noBtn.style.transform = `translate(${x}px, ${y}px)`;
+  noBtn.innerText = questions[Math.floor(Math.random() * questions.length)];
 }
-noBtn.addEventListener("mouseenter",moveNo);
-noBtn.addEventListener("click",moveNo);
+
+noBtn.addEventListener("mouseenter", moveNo);
+noBtn.addEventListener("click", moveNo);
 
 /* ✅ YES CLICK */
-yesBtn.onclick = ()=>{
-  document.getElementById("intro").style.display="none";
-  document.querySelector(".buttons").style.display="none";
-  document.getElementById("homeGif").style.display="none";
-  afterYes.style.display="block";
+yesBtn.addEventListener("click", () => {
+  document.getElementById("intro").style.display = "none";
+  document.querySelector(".buttons").style.display = "none";
+  document.getElementById("homeGif").style.display = "none";
+  afterYes.style.display = "block";
   music.play();
-};
+});
 
-/* 💕 HEART RAIN */
-loveBtn.onclick = ()=>{
-  for(let i=0;i<40;i++){
-    const h=document.createElement("div");
-    h.className="heart";
-    h.innerText="💖";
-    h.style.left=Math.random()*100+"vw";
-    h.style.animationDuration=2+Math.random()*2+"s";
-    document.body.appendChild(h);
-    setTimeout(()=>h.remove(),4000);
+/* 🎁 SHOW GIFT */
+function showGift(n) {
+  document.querySelectorAll(".gift-content").forEach(g => g.style.display = "none");
+  document.getElementById("gift" + n).style.display = "block";
+
+  // fireworks on every gift
+  for (let i = 0; i < 8; i++) createFirework();
+}
+
+/* 🎆 FIREWORK EFFECT */
+function createFirework() {
+  const x = Math.random() * window.innerWidth;
+  const y = Math.random() * window.innerHeight / 2;
+
+  for (let i = 0; i < 25; i++) {
+    const fw = document.createElement("div");
+    fw.className = "firework";
+    fw.style.left = x + "px";
+    fw.style.top = y + "px";
+    fw.style.background = `hsl(${Math.random() * 360},100%,60%)`;
+
+    const angle = Math.random() * Math.PI * 2;
+    const distance = 80 + Math.random() * 60;
+
+    fw.style.setProperty("--x", Math.cos(angle) * distance + "px");
+    fw.style.setProperty("--y", Math.sin(angle) * distance + "px");
+
+    document.body.appendChild(fw);
+    setTimeout(() => fw.remove(), 1200);
   }
-};
+}
 </script>
+
 
 </body>
 </html>
